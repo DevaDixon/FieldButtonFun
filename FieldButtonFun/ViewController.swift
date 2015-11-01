@@ -16,6 +16,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var theNumber: UITextField!
     @IBOutlet weak var theStory: UITextView!
     @IBOutlet weak var theName: UITextField!
+    @IBOutlet weak var storyButton: UIButton!
+    
+    
     
     let template1 = "The CCBC <name>'s descended upon <place>.\nThey vowed to <verb> night and day, until all <number> pizzas were consumed. \n<place> would never be the same again."
     
@@ -27,7 +30,6 @@ class ViewController: UIViewController {
     
     @IBAction func createStory(sender: AnyObject) {
         
-    
         
         switch count {
             case 1:
@@ -57,6 +59,9 @@ class ViewController: UIViewController {
         theStory.text=theStory.text.stringByReplacingOccurrencesOfString("<number>", withString: theNumber.text!)
         
         deleteText()
+        storyButton.enabled = false
+            
+        
     }
     
     func deleteText() {
@@ -65,6 +70,27 @@ class ViewController: UIViewController {
         theVerb.text = nil
         theName.text = nil
     }
+    
+    func notEmpty() -> Bool {
+        if (!thePlace.text!.isEmpty && !theNumber.text!.isEmpty && !theName.text!.isEmpty && !theVerb.text!.isEmpty) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    @IBAction func enableStoryButton(sender: AnyObject) {
+        
+        if notEmpty() {
+            storyButton.enabled = true
+        }
+        else {
+            storyButton.enabled = false
+        }
+    }
+   
+    
     
     @IBAction func hideKeyboard(sender: AnyObject) {
         thePlace.resignFirstResponder()
@@ -75,7 +101,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        storyButton.enabled = false
+       
     }
 
     override func didReceiveMemoryWarning() {
